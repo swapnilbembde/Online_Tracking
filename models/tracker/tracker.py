@@ -158,10 +158,7 @@ class baseTrack(TrackState):
         return self.tlwh_to_xyah(self.tlwh)
 
     def tracklet_score(self):
-        # score = (1 - np.exp(-0.6 * self.hit_streak)) * np.exp(-0.03 * self.time_by_tracking)
-
-        score = max(0, 1 - np.log(1 + 0.05 * self.time_by_tracking)) * (self.tracklet_len - self.time_by_tracking > 2)
-        # score = max(0, 1 - np.log(1 + 0.05 * self.n_tracking)) * (1 - np.exp(-0.6 * self.hit_streak))
+        score = np.exp(-0.01 * self.time_by_tracking) * (self.tracklet_len - self.time_by_tracking > 2)
         return score
 
     def __repr__(self):
